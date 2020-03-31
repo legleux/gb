@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+   <body>
+      {% for post in data %}
+      <div><p>
+      Name: {{ post.name }} <br>
+      Email: {{ post.email }} <br>
+      Comments: {{ post.comments }} </p></div>
+      {% endfor %}
+      <hr>
+      <form action = "http://localhost:5000/" method = "GET">
+         <p><input type = "submit" value = "back" /></p>
+   </body>
+</html>

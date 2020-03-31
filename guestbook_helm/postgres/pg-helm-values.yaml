@@ -1,0 +1,34 @@
+# # This works with:
+# helm install pg -f values.yaml bitnami/postgresql
+# # gets DNS:
+# pg-postgresql.default.svc.cluster.local
+image:
+  registry: docker.io
+  repository: bitnami/postgresql
+  # tag: 11.7.0-debian-10-r49
+  # check if this works
+  tag: 9.6.17-debian-10-r50
+  pullPolicy: IfNotPresent
+  debug: false
+
+# postgresqlUsername: postgres
+postgresqlPassword: password
+# postgresqlDatabase: Users
+postgresqlDataDir: /bitnami/postgresql/data
+
+initdbScripts:
+  init_db.sh: |
+    #!/bin/sh
+    psql -U postgres -c 'CREATE TABLE Users(id SERIAL PRIMARY KEY, name varchar, email varchar, comments varchar);'
+
+service:
+  type: ClusterIP
+  port: 5432
+  annotations: {}
+updateStrategy:
+  type: RollingUpdate
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 100m
